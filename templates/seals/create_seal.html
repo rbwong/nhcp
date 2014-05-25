@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block body_header %}
+    {% include "navbar.html" %}
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+	    <form action="/new/" method="post" class="form segment">
+	    	{{ form.media }}
+	        {% crispy form form.helper %}
+	        <input class="btn btn-success" type="submit" name="_save" value="Submit">
+	        <a class="btn btn-primary" href="/">Cancel</a>
+	    </form>
+    </div>
+{% endblock %}
+
+{% block body_footer %}
+    {% include "footer.html" %}
+{% endblock %}

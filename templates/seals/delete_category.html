@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block body_header %}
+    {% include "navbar.html" %}
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+	    <form action="/category/{{ object.name|slugify }}/delete/" method="post" class="form segment">
+	       	{% csrf_token %}
+		    <div class="alert alert-warning">
+			        <h2>Deleting {{ object }}...</h2>
+			        <p>
+			            Are you sure you want to delete this item?
+			            <strong>
+			                Anything depending on this item will be deleted as well!
+			            </strong>
+			        </p>
+			</div>
+		    <input class="btn btn-success" type="submit" name="confirm" value="Confirm">
+			<a class="btn btn-primary" href="/category/">Cancel</a>
+	    </form>
+    </div>
+{% endblock %}
+
+{% block body_footer %}
+    {% include "footer.html" %}
+{% endblock %}

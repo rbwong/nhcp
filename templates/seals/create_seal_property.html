@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block body_header %}
+    {% include "navbar.html" %}
+{% endblock %}
+
+{% block js_up %}
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="{% static "js/jquery.svg.js" %}"></script>
+	<script src="/static/js/modernizr-svg.js"></script>
+	<script type="text/javascript">
+		var drawNodes = [];
+        var sketchpad = null;
+        var polygon = null;
+		$(function() {
+			$('#svg-div').svg({onLoad: drawInitial});
+			$('.clear-svg').on('click', function(e){
+                drawNodes = [];
+                polygon.remove();
+                polygon = sketchpad.polygon(drawNodes, {fill: '#00BFFF', stroke: '#4169E1', strokeWidth: 1, opacity:0.5});
+                $('#id_svg').val('');
+            });
+		});
+
+		function drawInitial(svg) {
+            sketchpad = svg;
+            var surface = svg.image(0, 0, 500, 728, '{% static "media/" %}{{object.image}}');
+            polygon = svg.polygon([],{fill: '#FFFFFF', stroke: '#FFFFFF', strokeWidth: 1, opacity:0.5});
+            
+            $(polygon).attr('points', '{{ object.svg }}');
+            
+            $(surface).click(function(){
+                var offset = $('#svg-div').offset();
+                offset.left -= document.documentElement.scrollLeft || document.body.scrollLeft;
+                offset.top -= document.documentElement.scrollTop || document.body.scrollTop;
+
+                var start = {X: event.clientX - offset.left, Y: event.clientY - offset.top};
+                drawNodes.push([event.clientX - offset.left,event.clientY - offset.top]);
+                polygon.remove();
+                polygon = svg.polygon(drawNodes, {fill: '#FFFFFF', stroke: '#FFFFFF', strokeWidth: 1, opacity:0.5});
+                $('#id_svg').val($(polygon).attr('points'));
+                event.preventDefault();
+            });
+		}
+        
+    </script>
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="col-sm-12">
+			<div id="svg-div" style="width: 500px; height: 728px;">
+			</div>
+            <p class="lead">Click on the image to create the selected area.</p>
+            <div class="btn-group">
+                <button type="button" class="btn btn-danger clear-svg"><i class="fa fa-undo"></i> Clear</button>
+            </div>
+        </div>
+
+	    <form action="/{{ object.name }}/create-property/" method="post" class="form segment">
+	        {% crispy form %}
+	        <input class="btn btn-success" type="submit" name="_save" value="Submit">
+	        <a class="btn btn-primary" href="/{{ object.name }}/">Cancel</a>
+	    </form>
+        <p>{{ form.errors }}</p>
+
+    </div>
+{% endblock %}
+
+{% block body_footer %}
+    {% include "footer.html" %}
+{% endblock %}
+
+{% block js_bottom %}
+
+    
+{% endblock %}

@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_header %}
+    {% include "navbar.html" %}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <header class="page-header clearfix">            
+            <div class="pull-left">
+                <h3 class="page-title pull-left">
+                    <a class="page-title" href="/national-government-agencies/">National Government Agencies</a>
+                </h3>
+                <h3 class="page-title">Local Government Units</h3>
+            </div>
+            {% if user.is_authenticated %}
+                <div class="pull-right">
+                        <a href="/new/" class="btn btn-primary"><i class="fa fa-plus"></i> Add new seal</a>
+                        <a href="/category/new/" class="btn btn-primary"><i class="fa fa-plus"></i> Add new category</a>
+                        <a href="/category/" class="btn btn-primary"><i class="fa fa-list"></i> View all categories</a>
+                    
+                </div>
+            {% endif %}
+        </header>
+
+        <div class="row">
+            <div class="col-md-2">
+                <div class="category-div">
+                    <ul class="main-category-list">
+                        {% for region in regions %}
+                            <li class="category-list-item category-list-{{ region.id }}" data-category="{{ region.id }}">{{ region.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3">
+                {% for province in provinces %}
+                    <div class="subcategory-popup-div subcategory-popup-{{ province.id }} hidden">
+                        <ul class="main-category-list">
+                            {% for lgu in object_list %}
+                                {% if lgu.province == province %}
+                                    <li><a href="/{{ lgu.name|slugify }}/">{{ lgu.name }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>  
+                {% endfor %}
+            </div>
+            <div class="col-md-3">
+                {% for region in regions %}
+                    <div class="category-popup-div category-popup-{{ region.id }} hidden">
+                        <h2>{{ region.name }}</h2>
+                        <ul class="main-category-list">
+                            {% for province in provinces %}
+                                {% if province.region == region %}
+                                    <li><a class="subcategory-list-item" data-subcategory="{{ province.id }}">{{ province.name }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-4">
+                <div id="svg-div">
+                    <div class="visible-lg">
+                        <svg class="seal-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="390" height="568">
+                            <image class="map map390" x="0" y="0" width="390" height="568" xlink:href="/static/images/philippine-map.jpg"></image>
+
+                            {% for region in regions %}
+                                 <polygon class="category-map-highlight polygon-category-{{ region.id }}" data-category="{{ region.id }}"  points="{{ region.svg }}" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1" opacity="0" transform="scale(.78)"></polygon>
+                            {% endfor %}
+                           
+                        </svg>
+                    </div>
+
+                    <div class="visible-md">
+                        <svg class="seal-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="324" height="472">
+                            <image class="map map324" x="0" y="0" width="324" height="472" xlink:href="/static/images/philippine-map.jpg"></image>
+
+                            {% for region in regions %}
+                                 <polygon class="category-map-highlight polygon-category-{{ region.id }}" data-category="{{ region.id }}"  points="{{ region.svg }}" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1" opacity="0" transform="scale(.648)"></polygon>
+                            {% endfor %}
+
+                        </svg>
+                    </div>
+
+                    <div class="visible-sm">
+                        <svg class="seal-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="250" height="364">
+                            <image class="map map324" x="0" y="0" width="250" height="364" xlink:href="/static/images/philippine-map.jpg"></image>
+
+                            {% for region in regions %}
+                                 <polygon class="category-map-highlight polygon-category-{{ region.id }}" data-category="{{ region.id }}"  points="{{ region.svg }}" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1" opacity="0" transform="scale(.5)"></polygon>
+                            {% endfor %}
+
+                        </svg>
+                    </div>
+                    <div class="visible-xs">
+                        <svg class="seal-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="250" height="364">
+                            <image class="map map324" x="0" y="0" width="250" height="364" xlink:href="/static/images/philippine-map.jpg"></image>
+
+                            {% for region in regions %}
+                                 <polygon class="category-map-highlight polygon-category-{{ region.id }}" data-category="{{ region.id }}"  points="{{ region.svg }}" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1" opacity="0" transform="scale(.5)"></polygon>
+                            {% endfor %}
+
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body_footer %}
+    {% include "footer.html" %}
+{% endblock %}
+
+{% block js_bottom %}
+    <script type="text/javascript" src="{% static "js/jquery.svgdom.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.svg.min.js" %}"></script>
+
+    <script type="text/javascript">
+    //script for clicking region
+    $(".category-list-item").click(function() {
+        var id = $(this).data('category');
+        $('.category-popup-div').addClass('hidden');
+        $('.category-popup-'+id).removeClass('hidden');
+
+        $(".category-list-item").removeClass('selected');
+        $(this).addClass('selected');
+
+        $(".category-map-highlight").each(function( index ) {
+          this.classList.remove("selected");
+        });
+        
+        $(".polygon-category-"+id).attr("class", "category-map-highlight polygon-category-" + id + " selected");
+    });
+
+    //script for hovering on province
+    $(".subcategory-list-item").hover(function() {
+        var id = $(this).data('subcategory');
+        $('.subcategory-popup-div').addClass('hidden');
+        $('.subcategory-popup-'+id).removeClass('hidden');
+    });
+
+    //script for selecting a region
+    $(".category-list-item").click(function() {
+        $(".main-category-list").addClass('selected');
+    });
+
+    //script for clicking on a region in the map
+    $(".category-map-highlight").click(function() {
+        var id = $(this).data('category');
+        $(".main-category-list").addClass('selected');
+
+        $('.category-popup-div').addClass('hidden');
+        $('.category-popup-'+id).removeClass('hidden');
+        $(".category-list-item").removeClass('selected');
+        $('.category-list-'+id).addClass('selected');
+
+        $(".category-map-highlight").each(function( index ) {
+          this.classList.remove("selected");
+        });
+        this.classList.add("selected");
+    });
+    </script>
+    <script type="text/javascript">
+
+    </script>
+
+{% endblock %}

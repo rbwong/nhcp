@@ -1,0 +1,377 @@
+@font-face {
+    font-family: 'Varela';
+    src: url('../fonts/varela-regular-webfont.eot');
+    src: url('../fonts/varela-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/varela-regular-webfont.woff') format('woff'),
+         url('../fonts/varela-regular-webfont.ttf') format('truetype'),
+         url('../fonts/varela-regular-webfont.svg#Varela') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/montserrat-regular-webfont.eot');
+    src: url('../fonts/montserrat-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/montserrat-regular-webfont.woff') format('woff'),
+         url('../fonts/montserrat-regular-webfont.ttf') format('truetype'),
+         url('../fonts/montserrat-regular-webfont.svg#Montserrat') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: 'Varela', sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+    font-family: 'Varela', sans-serif;
+    /* The html and body elements cannot have any padding or margin. */
+}
+/* Wrapper for page content to push down footer */
+#wrap {
+    min-height: 100%;
+    height: auto;
+    /* Negative indent footer by it's height */
+    margin: 0 auto -26px;
+    padding: 0 0 26px;
+}
+
+/* Set the fixed height of the footer here */
+
+#footer {
+    height: 26px;
+    color: #121212;
+    background: #f0f0f0;
+    font-size: 11px;
+}
+
+#footer p {
+    line-height: 26px;
+    margin: 0;
+}
+
+#footer a {
+    color: #121212;
+}
+
+#content {
+    padding: 60px 0 0;
+}
+
+/* horizontal form css */
+
+.form-horizontal {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.form-horizontal .control-group {
+    margin-bottom: 20px;
+    *zoom: 1; }
+
+.form-horizontal .form-group {
+    margin-top: 8px;
+    margin-right: 10px;
+}
+
+.form-horizontal .control-group:before, .form-horizontal .control-group:after {
+    display: table;
+    content: "";
+    line-height: 0; }
+
+.form-horizontal .control-group:after {
+    clear: both; }
+
+.form-horizontal .control-label {
+    float: left;
+    width: 160px;
+    padding-top: 5px;
+    text-align: right; }
+
+.form-horizontal .controls {
+    *display: inline-block;
+    *padding-left: 20px;
+    margin-left: 180px;
+    *margin-left: 0; }
+
+.form-horizontal .controls:first-child {
+    *padding-left: 180px; }
+
+.form-horizontal .help-block {
+    margin-bottom: 0; }
+
+.form-horizontal input + .help-block,
+.form-horizontal select + .help-block,
+.form-horizontal textarea + .help-block,
+.form-horizontal .uneditable-input + .help-block,
+.form-horizontal .input-prepend + .help-block,
+.form-horizontal .input-append + .help-block {
+    margin-top: 10px; }
+
+.form-horizontal .form-actions {
+    padding-left: 180px; }
+
+.form-group.error label, .form-group.error .help-inline{
+    color: #b94a48;
+}
+
+.form-horizontal .checkbox {
+    padding-left: 180px;
+}
+
+input.error{
+    border-color: #b94a48;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+input.error:focus{
+    border-color: #953b39;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #d59392;
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #d59392;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #d59392;
+}
+
+#div_id_thumbnail {
+    display: none;
+}
+
+/* navbar */
+
+.navbar {
+    position: relative;
+    padding: 5px 0px;
+    border: 1px solid transparent;
+}
+
+.navbar-brand {
+    font-family: 'Montserrat', sans-serif;
+    background-image: url('../images/logo.png');
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    background-size: 47px 47px;
+    padding-left: 79px;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.navbar-brand:hover {
+    color: #ffffff;
+    background-color: #456e93;
+}
+
+.navbar-brand-br {
+    display: inline;
+}
+
+@media (min-width: 480px) {
+    .navbar-brand {
+        font-size: 17px;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar-brand {
+        font-size: 19px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .navbar-brand {
+        font-size: 19px;
+    }
+    .navbar-brand-br {
+        display: none;
+    }
+}
+
+@media (min-width: 1280px) {
+    .navbar-brand {
+        font-size: 24px;
+    }
+}
+
+.search-label {
+    margin-bottom: 0;
+    color: #fff;
+    font-weight: normal;
+    text-transform: uppercase;
+    margin-right: 10px;
+}
+
+#search-input {
+    width: 184px;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .authenticated #search-input {
+        width: 100px;
+    }
+}
+
+.search-button {
+    height: 32px;
+    width: 35px;
+    border: none;
+    padding: 0;
+    vertical-align: top;
+    line-height: 32px;
+}
+
+.navbar-search-form {
+    width: 100%;
+    margin-left: 0;
+}
+
+.authenticated .navbar-search-form {
+    margin-right: 5px;
+}
+
+@media (min-width: 768px) {
+    .navbar-search-form {
+        width: auto;
+        margin-right: -30px;
+    }
+
+    .authenticated .main-navbar-right {
+        margin-right: -15px;
+    }
+}
+
+.navbar-search-form .form-group {
+    display: inline-block;
+    margin-bottom: 0;
+}
+
+.main-navbar-right a.sign-out-link,
+.main-navbar-right a.view-map-link {
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 32px;
+    line-height: 32px;
+    margin-top: 14px;
+}
+
+@media (min-width: 768px) {
+    .navbar-collapse .navbar-nav.navbar-right.view-map-link-wrapper {
+        margin-right: 10px;
+    }
+    .authenticated .navbar-collapse .navbar-nav.navbar-right.view-map-link-wrapper {
+        margin-right: 1px;
+    }
+}
+
+
+/* page header */
+
+.back-link-container {
+    margin-top: 16px;
+    display: none;
+}
+
+.back-link,
+.back-link:hover {
+    color: #a1aeb9;
+    font-size: 14px;
+}
+
+.back-link .fa {
+    padding-right: 8px;
+}
+
+.page-title {
+    font-size: 24px;
+    margin: 0;
+    line-height: 45px;
+}
+
+.page-subtitle {
+    font-size: 22px;
+    margin: 30px 0 15px 0;
+    line-height: 25px;
+    color: #121212;
+}
+
+.page-subtitle a {
+    color: #121212;
+}
+
+.back-link-container + .page-header {
+    margin-top: 17px;
+}
+
+.page-header {
+    border-bottom: none;
+}
+
+/* table */
+
+table a {
+    color: #121212;
+}
+
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+    border-top: none;
+    line-height: 38px;
+}
+
+.table > thead > tr > th:first-child,
+.table > tbody > tr > th:first-child,
+.table > tfoot > tr > th:first-child,
+.table > thead > tr > td:first-child,
+.table > tbody > tr > td:first-child,
+.table > tfoot > tr > td:first-child {
+    padding-left: 21px;
+}
+
+.table > thead > tr > th:last-child,
+.table > tbody > tr > th:last-child,
+.table > tfoot > tr > th:last-child,
+.table > thead > tr > td:last-child,
+.table > tbody > tr > td:last-child,
+.table > tfoot > tr > td:last-child {
+    padding-right: 21px;
+}
+
+tr:hover .table-controls {
+    display: block;
+}
+
+.table-controls {
+    display: none;
+}
+
+.table-controls .fa {
+    vertical-align: middle;
+    padding-right: 12px;
+}
+
+.table-controls a {
+    padding-left: 21px;
+    color: #b3b3b3;
+}
+
+.table-controls a:hover {
+    color: #445d74;
+}
+
+/** language **/
+.language-link.active {
+    font-weight: bold;
+}
+
+
+#footer {
+	font-size: 12px;
+	line-height: 20px;
+	text-align: center;
+}

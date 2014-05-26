@@ -9,7 +9,7 @@
 	<div class="container">
 	    <form action="/{{ object.name|slugify }}/edit/" method="post" class="form segment" enctype="multipart/form-data">
 	    	{{ form.media }}
-	        {% crispy form form.helper %}
+	        {% crispy form %}
 	        <input class="btn btn-success" type="submit" name="_save" value="Submit">
 	        <a class="btn btn-primary" href="/">Cancel</a>
 	    </form>

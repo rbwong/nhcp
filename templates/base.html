@@ -15,7 +15,7 @@
         <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="{% static "css/base.css" %}" /> 
-        <link rel="stylesheet" href="{% static "css/footer.css" %}" /> 
+        <link rel="stylesheet" href="{% static "css/nav.css" %}" /> 
         {% block css %}{% endblock %}
 
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -32,4 +32,18 @@
     </body>
 
     {% block js_bottom %}{% endblock %}
+    <script type="text/javascript">
+            $(function(){
+                var $link = $('a.language-link'),
+                    $input = $('form.language-form :input[name="language"]');
+
+                $link.click(function() {
+
+                    var code = $(this).data('language');
+
+                    alert(code);
+                })
+
+            });
+    </script>
 </html>

@@ -8,24 +8,31 @@ from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 
 class CategoryCreationForm(forms.ModelForm):
+    helper = FormHelper()
+    helper.form_class = 'form-horizontal'
+    helper.label_class = 'col-lg-1'
+    helper.field_class = 'col-lg-11'
+    helper.form_tag = False
+    helper.layout = Layout(
+        Field('name', wrapper_class='row'),
+    )
+
     name = forms.CharField(required=True)
 
     class Meta:
         model = Region
         fields = ('name',)
 
-    # Uni-form
-    def __init__(self, *args, **kwargs):
-        self.helper = FormHelper()
-        self.helper.form_tag = False
-        self.helper.form_class = 'form-horizontal'
-        self.helper.layout = Layout(
-            Field('name', css_class='input-xlarge'),
-        )
-        self.request = kwargs.pop('request', None)
-        return super(CategoryCreationForm, self).__init__(*args, **kwargs)
-
 class EditSVGForm(forms.ModelForm):
+    helper = FormHelper()
+    helper.form_class = 'form-horizontal'
+    helper.label_class = 'col-lg-2'
+    helper.field_class = 'col-lg-10'
+    helper.form_tag = False
+    helper.layout = Layout(
+        Field('name_fil', wrapper_class='row'),
+    )
+
     name_fil = forms.CharField(required=False, label='Name in Filipino')
     svg = forms.CharField(widget=forms.HiddenInput())
 
@@ -33,19 +40,22 @@ class EditSVGForm(forms.ModelForm):
         model = Region
         fields = ('name_fil', 'svg')
 
-    # Uni-form
-    def __init__(self, *args, **kwargs):
-        self.helper = FormHelper()
-        self.helper.form_tag = False
-        self.helper.form_class = 'form-horizontal'
-        self.helper.layout = Layout(
-            Field('name_fil', css_class='input-xlarge'),
-        )
-        self.request = kwargs.pop('request', None)
-        return super(EditSVGForm, self).__init__(*args, **kwargs)
-
 
 class SealCreationForm(forms.ModelForm):
+    helper = FormHelper()
+    helper.form_class = 'form-horizontal'
+    helper.label_class = 'col-lg-2'
+    helper.field_class = 'col-lg-10'
+    helper.form_tag = False
+    helper.layout = Layout(
+        Field('image', wrapper_class='row'),
+        Field('name', wrapper_class='row'),
+        Field('name_fil', wrapper_class='row'),
+        Field('description', wrapper_class='row'),
+        Field('description_fil', wrapper_class='row'),
+        Field('province', wrapper_class='row'),
+    )
+
     image = forms.ImageField()
     name = forms.CharField(required=True)
     name_fil = forms.CharField(required=False, label='Name in Filipino')
@@ -57,22 +67,20 @@ class SealCreationForm(forms.ModelForm):
         model = LGU
         fields = ('image', 'name', 'name_fil', 'description', 'description_fil', 'province', 'location')
 
-    # Uni-form
-    def __init__(self, *args, **kwargs):
-        self.helper = FormHelper()
-        self.helper.form_tag = False
-        self.helper.form_class = 'form-horizontal'
-        self.helper.layout = Layout(
-            Field('name', css_class='input-xlarge'),
-            Field('name_fil', css_class='input-xlarge'),
-            Field('description', css_class='input-xlarge'),
-            Field('description_fil', css_class='input-xlarge'),
-        )
-        self.request = kwargs.pop('request', None)
-        return super(SealCreationForm, self).__init__(*args, **kwargs)
-
 
 class SealInfoForm(forms.ModelForm):
+    helper = FormHelper()
+    helper.form_class = 'form-horizontal'
+    helper.label_class = 'col-lg-2'
+    helper.field_class = 'col-lg-10'
+    helper.form_tag = False
+    helper.layout = Layout(
+        Field('name', wrapper_class='row'),
+        Field('name_fil', wrapper_class='row'),
+        Field('description', wrapper_class='row'),
+        Field('description_fil', wrapper_class='row'),
+    )
+
     name = forms.CharField(required=True)
     name_fil = forms.CharField(required=False, label='Name in Filipino')
     description = forms.CharField(widget=forms.Textarea, required=False)
@@ -82,22 +90,20 @@ class SealInfoForm(forms.ModelForm):
         model = SealInfo
         fields = ('name', 'name_fil', 'description', 'description_fil')
 
-    # Uni-form
-    def __init__(self, *args, **kwargs):
-        self.helper = FormHelper()
-        self.helper.form_tag = False
-        self.helper.form_class = 'form-horizontal'
-        self.helper.layout = Layout(
-            Field('name', css_class='input-xlarge'),
-            Field('name_fil', css_class='input-xlarge'),
-            Field('description', css_class='input-xlarge'),
-            Field('description_fil', css_class='input-xlarge'),
-        )
-        self.request = kwargs.pop('request', None)
-        return super(SealInfoForm, self).__init__(*args, **kwargs)
-
 
 class SealPropertyForm(forms.ModelForm):
+    helper = FormHelper()
+    helper.form_class = 'form-horizontal'
+    helper.label_class = 'col-lg-2'
+    helper.field_class = 'col-lg-10'
+    helper.form_tag = False
+    helper.layout = Layout(
+        Field('name', wrapper_class='row'),
+        Field('name_fil', wrapper_class='row'),
+        Field('description', wrapper_class='row'),
+        Field('description_fil', wrapper_class='row'),
+    )
+
     name = forms.CharField(required=True)
     name_fil = forms.CharField(required=False, label='Name in Filipino')
     description = forms.CharField(widget=forms.Textarea, required=False)
@@ -107,17 +113,3 @@ class SealPropertyForm(forms.ModelForm):
     class Meta:
         model = SealProperty
         fields = ('name', 'name_fil', 'description', 'description_fil', 'svg')
-
-    # Uni-form
-    def __init__(self, *args, **kwargs):
-        self.helper = FormHelper()
-        self.helper.form_tag = False
-        self.helper.form_class = 'form-horizontal'
-        self.helper.layout = Layout(
-            Field('name', css_class='input-xlarge'),
-            Field('name_fil', css_class='input-xlarge'),
-            Field('description', css_class='input-xlarge'),
-            Field('description_fil', css_class='input-xlarge'),
-        )
-        self.request = kwargs.pop('request', None)
-        return super(SealPropertyForm, self).__init__(*args, **kwargs)

@@ -107,7 +107,7 @@ TEMPLATE_DIRS = (
     TEMPLATE_PATH,
 )
 
-CRISPY_TEMPLATE_PACK='bootstrap'
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 LOGIN_URL = '/login/'
 

@@ -9,7 +9,7 @@
 	<div class="container">
 	    <form action="/new/" method="post" class="form segment">
 	    	{{ form.media }}
-	        {% crispy form form.helper %}
+	        {% crispy form %}
 	        <input class="btn btn-success" type="submit" name="_save" value="Submit">
 	        <a class="btn btn-primary" href="/">Cancel</a>
 	    </form>

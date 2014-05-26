@@ -9,6 +9,10 @@ a {
 	text-decoration: none;
 }
 
+form {
+	margin-top: 30px;
+}
+
 .main-category-list {
 	list-style-type: none;
 	cursor: pointer;

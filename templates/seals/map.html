@@ -1,16 +1,13 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
-
-{% block body_header %}
-    {% include "navbar.html" %}
-{% endblock %}
 
 {% block body %}
     <div class="container">
-        <header class="page-header clearfix">            
+        <header class="page-header clearfix">
             <div class="pull-left">
                 <h3 class="page-title pull-left">
-                    <a class="page-title" href="/national-government-agencies/">National Government Agencies</a>
+                    <a class="page-title" href="/national-government-agencies/">{% trans "National Government Agencies" %}</a>
                 </h3>
                 <h3 class="page-title">Local Government Units</h3>
             </div>
@@ -19,7 +16,7 @@
                         <a href="/new/" class="btn btn-primary"><i class="fa fa-plus"></i> Add new seal</a>
                         <a href="/category/new/" class="btn btn-primary"><i class="fa fa-plus"></i> Add new category</a>
                         <a href="/category/" class="btn btn-primary"><i class="fa fa-list"></i> View all categories</a>
-                    
+
                 </div>
             {% endif %}
         </header>
@@ -44,7 +41,7 @@
                                 {% endif %}
                             {% endfor %}
                         </ul>
-                    </div>  
+                    </div>
                 {% endfor %}
             </div>
             <div class="col-md-3">
@@ -70,7 +67,7 @@
                             {% for region in regions %}
                                  <polygon class="category-map-highlight polygon-category-{{ region.id }}" data-category="{{ region.id }}"  points="{{ region.svg }}" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1" opacity="0" transform="scale(.78)"></polygon>
                             {% endfor %}
-                           
+
                         </svg>
                     </div>
 
@@ -111,10 +108,6 @@
     </div>
 {% endblock %}
 
-{% block body_footer %}
-    {% include "footer.html" %}
-{% endblock %}
-
 {% block js_bottom %}
     <script type="text/javascript" src="{% static "js/jquery.svgdom.min.js" %}"></script>
     <script type="text/javascript" src="{% static "js/jquery.svg.min.js" %}"></script>
@@ -132,7 +125,7 @@
         $(".category-map-highlight").each(function( index ) {
           this.classList.remove("selected");
         });
-        
+
         $(".polygon-category-"+id).attr("class", "category-map-highlight polygon-category-" + id + " selected");
     });
 
@@ -159,7 +152,7 @@
         $('.category-list-'+id).addClass('selected');
 
         $(".category-map-highlight").each(function( index ) {
-          this.classList.remove("selected");
+            this.classList.remove("selected");
         });
         this.classList.add("selected");
     });

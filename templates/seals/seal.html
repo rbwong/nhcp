@@ -5,7 +5,7 @@
 {% block js_up %}
     {% leaflet_js %}
     {% leaflet_css %}
-    
+
     <script type="text/javascript">
         function map_init_basic (map, options) {
             map.setView(new L.LatLng({{ object.location.latitude }}, {{ object.location.longitude }}), 12);
@@ -14,13 +14,9 @@
     </script>
 {% endblock %}
 
-{% block body_header %}
-    {% include "navbar.html" %}
-{% endblock %}
-
 {% block body %}
     <div class="container">
-        <header class="page-header clearfix">            
+        <header class="page-header clearfix">
             <div class="pull-left">
                 <h3 class="page-title">{{ object.name }}</h3>
             </div>
@@ -42,13 +38,13 @@
                     {% for property in properties %}
                          <polygon  class="seal-property-highlight" data-property="{{ property.id }}"  points="{{ property.svg }}" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1" opacity="0" transform="scale(.78)"></polygon>
                     {% endfor %}
-                   
+
                     {% for property in properties %}
                          <mask id="mask-{{ property.id }}">
                             <rect width="330.0" height="306.332882273" fill="#333333" stroke="#333333"></rect>
-                            
+
                                 <polygon points= "90.9968395517,82.8364655904 106.626068239,82.3899161993 107.07261763,75.4684006377 223.398734004,75.6916753333 223.622008699,82.8364655904 239.474512082,83.2830149814 240.144336169,227.791361105 199.285066886,228.014635801 197.052319931,233.373228494 193.926474193,238.508546491 189.684254978,243.643864488 185.665310458,247.439534312 180.08344307,250.788654746 175.394674464,252.128302919 165.793862556,255.254148656 157.979248212,253.467951092 149.494809782,249.895555963 143.689667698,246.54643553 136.544877441,238.508546491 131.632834139,228.684459888 122.478571622,227.344811714 117.343253625,227.791361105 107.519167021,227.791361105 98.8114538954,227.791361105 91.2201142472,227.344811714 90.5502901606,82.6379999514 90.9968395517,82.1914505604" fill="white" stroke="white" filter="url(#polygonfilter)" stroke-width="1" transform="scale(.78)"></polygon>
-                            
+
                         </mask>
                     {% endfor %}
 
@@ -98,13 +94,9 @@
                 </div>
             {% endfor %}
         </div>
-        
+
         {% leaflet_map "main" callback="window.map_init_basic" %}
     </div>
-{% endblock %}
-
-{% block body_footer %}
-    {% include "footer.html" %}
 {% endblock %}
 
 {% block js_bottom %}

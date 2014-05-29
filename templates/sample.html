@@ -1,11 +1,11 @@
-{% load leaflet_tags %}
-<html>
-	<head>
-		{% leaflet_js %}
-		{% leaflet_css %}
-	</head>
-	<body>
-	<h1>Django-Leaflet</h1>
-	{% leaflet_map "main" %}
-	</body>
-</html>
+{% load i18n %}
+
+{% get_current_language as LANGUAGE_CODE %}
+<!-- Current language: {{ LANGUAGE_CODE }} -->
+<p>{% trans "Welcome to our page" %}</p>
+
+{% language 'en' %}
+    {% get_current_language as LANGUAGE_CODE %}
+    <!-- Current language: {{ LANGUAGE_CODE }} -->
+    <p>{% trans "Welcome to our page" %}</p>
+{% endlanguage %}

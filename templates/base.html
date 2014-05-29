@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 {% load static %}
-{% load staticfiles %} 
+{% load staticfiles %}
 
 <html>
     <meta charset="utf-8" />
@@ -11,11 +11,11 @@
     <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
     <head>
         <title>{% block title %}Interactive Registry of Government Seals{% endblock %}</title>
-        
+
         <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="{% static "css/base.css" %}" /> 
-        <link rel="stylesheet" href="{% static "css/nav.css" %}" /> 
+        <link rel="stylesheet" href="{% static "css/base.css" %}" />
+        <link rel="stylesheet" href="{% static "css/nav.css" %}" />
         {% block css %}{% endblock %}
 
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -24,23 +24,30 @@
     </head>
 
     <body>
-        {% block body_header %}{% endblock %}
+        {% block body_header %}
+            {% include "navbar.html" %}
+        {% endblock %}
 
         {% block body %}{% endblock %}
 
-        {% block body_footer %}{% endblock %}
+        {% block body_footer %}
+            {% include "footer.html" %}
+        {% endblock %}
+
     </body>
 
     {% block js_bottom %}{% endblock %}
     <script type="text/javascript">
             $(function(){
                 var $link = $('a.language-link'),
-                    $input = $('form.language-form :input[name="language"]');
+                    $input = $('form.language-form input[name="language"]');
 
                 $link.click(function() {
 
                     var code = $(this).data('language');
 
+                    $input.val(code);
+                    $input.parents('form').submit();
                     alert(code);
                 })
 

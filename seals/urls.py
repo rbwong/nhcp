@@ -1,13 +1,13 @@
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.decorators import login_required, permission_required
 from seals.views import *
-from seals import views
 from django.views.generic import TemplateView
 
 from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^$', MapView.as_view()),
     url(r'^new/$', login_required(CreateSealView.as_view())),
     url(r'^category/$', RegionView.as_view()),

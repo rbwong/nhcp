@@ -1,20 +1,19 @@
 <div id="footer">
-  <div class="container">
-    <div class="container text-center">
-        <p>
-            Copyright 2013 - <a href="http://nhcp.gov.ph/">NHCP</a>. Languages:
-            
-                <a href="javascript: void(0);" class="language-link active" data-language="en-us">English</a>
-            
-                <a href="javascript: void(0);" class="language-link " data-language="tl">Filipino</a>
-            
-        </p>
+    <div class="container">
+        <div class="container text-center">
+            <p>
+                Copyright 2013 - <a href="http://nhcp.gov.ph/">NHCP</a>. Languages:
 
-        <form action="/i18n/setlang/" method="POST" class="language-form hide">
-            {% csrf_token %}
-            <input type="text" name="language">
-            <input type="submit">
-        </form>
+                <a href="javascript: void(0);" class="language-link active" data-language="en-us">English</a>
+
+                <a href="javascript: void(0);" class="language-link " data-language="tl">Filipino</a>
+            </p>
+
+            <form action="/i18n/setlang/" method="POST" class="language-form hide">
+                {% csrf_token %}
+                <input type="text" name="language">
+                <input type="submit">
+            </form>
+        </div>
     </div>
-  </div>
 </div>

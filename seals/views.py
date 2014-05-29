@@ -1,13 +1,15 @@
 from django.shortcuts import render, get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.utils import translation
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from seals.models import Region, Province, LGU, SealInfo, SealProperty
-from seals.forms import CategoryCreationForm, EditSVGForm, SealCreationForm, SealInfoForm, SealPropertyForm
+from .models import Region, Province, LGU, SealInfo, SealProperty
+from .forms import CategoryCreationForm, EditSVGForm, SealCreationForm, SealInfoForm, SealPropertyForm
 
-class MapView(ListView):  
+
+class MapView(ListView):
     queryset = LGU.objects.all().order_by('name')
     template_name = 'seals/map.html'
 
@@ -18,7 +20,7 @@ class MapView(ListView):
         return context
 
 
-class RegionView(ListView):  
+class RegionView(ListView):
     queryset = Region.objects.all().order_by('name')
     template_name = 'seals/region_list.html'
 
@@ -139,8 +141,10 @@ class CreateSealInfoView(CreateView):
     def get_success_url(self):
         return '/' + self.args[0] + '/'
 
-    def form_valid(self, form):
-        form.instance.seal = self.object
+    def form_valid(self, form, **kwargs):
+        name = self.args[0].replace('-', ' ')
+        lgu = get_object_or_404(LGU, name__iexact=name)
+        form.instance.seal = lgu
         return super(CreateSealInfoView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -167,5 +171,4 @@ class CreateSealProperty(CreateView):
     def form_valid(self, form):
         name = self.args[0].replace('-', ' ')
         form.instance.seal = get_object_or_404(LGU, name__iexact=name)
-        print self.object
         return super(CreateSealProperty, self).form_valid(form)

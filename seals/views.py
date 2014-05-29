@@ -1,11 +1,9 @@
-from django.shortcuts import render, get_object_or_404, render_to_response
-from django.template import RequestContext
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.core.urlresolvers import reverse_lazy
 from django.utils import translation
-from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Region, Province, LGU, SealInfo, SealProperty
+from .models import Region, Province, LGU, SealProperty
 from .forms import CategoryCreationForm, EditSVGForm, SealCreationForm, SealInfoForm, SealPropertyForm
 
 
@@ -32,13 +30,14 @@ class RegionView(ListView):
 class CreateCategoryView(CreateView):
     template_name = 'seals/create_category.html'
     form_class = CategoryCreationForm
-    success_url = '/'
+    success_url = reverse_lazy('map-view')
 
     def form_valid(self, form):
         if '_save' in self.request.POST:
-            self.success_url = '/'
+            self.success_url = reverse_lazy('map-view')
         elif '_save_and_edit' in self.request.POST:
-            self.success_url = '/category/' + form.instance.name + '/edit/'
+            self.success_url = reverse_lazy(
+                'category-edit-view', kwargs={'pk': form.instance.name})
         return super(CreateCategoryView, self).form_valid(form)
 
 
@@ -46,25 +45,28 @@ class UpdateCategoryView(UpdateView):
     model = Region
     form_class = CategoryCreationForm
     template_name = 'seals/update_category.html'
+    success_url = reverse_lazy('map-view')
 
     def get_object(self):
-        name = self.args[0].replace('-', ' ')
+        name = self.kwargs['pk'].replace('-', ' ')
         return get_object_or_404(Region, name__iexact=name)
 
-    def get_success_url(self):
-        return '/category/' + self.args[0] + '/edit/'
-
     def form_valid(self, form):
+        if '_save' in self.request.POST:
+            self.success_url = reverse_lazy('map-view')
+        elif '_save_and_edit' in self.request.POST:
+            self.success_url = reverse_lazy(
+                'category-edit-view', kwargs={'pk': form.instance.name})
         return super(UpdateCategoryView, self).form_valid(form)
 
 
 class CategoryDelete(DeleteView):
     model = Region
     template_name = 'seals/delete_category.html'
-    success_url = '/category/'
+    success_url = reverse_lazy('category-view')
 
     def get_object(self):
-        name = self.args[0].replace('-', ' ')
+        name = self.kwargs['pk'].replace('-', ' ')
         return get_object_or_404(Region, name__iexact=name)
 
 
@@ -74,11 +76,11 @@ class UpdateSVG(UpdateView):
     template_name = 'seals/edit_svg.html'
 
     def get_object(self):
-        name = self.args[0].replace('-', ' ')
+        name = self.kwargs['pk'].replace('-', ' ')
         return get_object_or_404(Region, name__iexact=name)
 
     def get_success_url(self):
-        return '/category/' + self.args[0] + '/edit/'
+        return reverse_lazy('category-svg-view', kwargs={'pk': self.kwargs['pk']})
 
     def form_valid(self, form):
         return super(UpdateSVG, self).form_valid(form)
@@ -87,7 +89,7 @@ class UpdateSVG(UpdateView):
 class CreateSealView(CreateView):
     template_name = 'seals/create_seal.html'
     form_class = SealCreationForm
-    success_url = '/'
+    success_url = reverse_lazy('map-view')
 
     def form_valid(self, form):
         return super(CreateSealView, self).form_valid(form)
@@ -97,7 +99,7 @@ class SealView(DetailView):
     template_name = 'seals/seal.html'
 
     def get_object(self):
-        name = self.args[0].replace('-', ' ')
+        name = self.kwargs['pk'].replace('-', ' ')
         return get_object_or_404(LGU, name__iexact=name)
 
     def get_context_data(self, **kwargs):
@@ -110,14 +112,14 @@ class UpdateSealView(UpdateView):
     model = LGU
     form_class = SealCreationForm
     template_name = 'seals/update_seal.html'
-    success_url = '/'
+    success_url = reverse_lazy('map-view')
 
     def get_object(self):
-        name = self.args[0].replace('-', ' ')
+        name = self.kwargs['pk'].replace('-', ' ')
         return get_object_or_404(LGU, name__iexact=name)
 
     def get_success_url(self):
-        return '/' + self.args[0] + '/'
+        return reverse_lazy('seal-edit-view', kwargs={'pk': self.kwargs['pk']})
 
     def form_valid(self, form):
         return super(UpdateSealView, self).form_valid(form)
@@ -126,30 +128,29 @@ class UpdateSealView(UpdateView):
 class SealDelete(DeleteView):
     model = LGU
     template_name = 'seals/delete_seal.html'
-    success_url = '/'
+    success_url = reverse_lazy('map-view')
 
     def get_object(self):
-        name = self.args[0].replace('-', ' ')
+        name = self.kwargs['pk'].replace('-', ' ')
         return get_object_or_404(LGU, name__iexact=name)
 
 
 class CreateSealInfoView(CreateView):
     template_name = 'seals/create_seal_info.html'
     form_class = SealInfoForm
-    success_url = '/'
 
     def get_success_url(self):
-        return '/' + self.args[0] + '/'
+        return reverse_lazy('seal-view', kwargs={'pk': self.kwargs['pk']})
 
     def form_valid(self, form, **kwargs):
-        name = self.args[0].replace('-', ' ')
+        name = self.kwargs['pk'].replace('-', ' ')
         lgu = get_object_or_404(LGU, name__iexact=name)
         form.instance.seal = lgu
         return super(CreateSealInfoView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super(CreateSealInfoView, self).get_context_data(**kwargs)
-        name = self.args[0].replace('-', ' ')
+        name = self.kwargs['pk'].replace('-', ' ')
         context['object'] = get_object_or_404(LGU, name__iexact=name)
         return context
 
@@ -157,18 +158,17 @@ class CreateSealInfoView(CreateView):
 class CreateSealProperty(CreateView):
     form_class = SealPropertyForm
     template_name = 'seals/create_seal_property.html'
-    success_url = '/'
 
     def get_context_data(self, **kwargs):
         context = super(CreateSealProperty, self).get_context_data(**kwargs)
-        name = self.args[0].replace('-', ' ')
+        name = self.kwargs['pk'].replace('-', ' ')
         context['object'] = get_object_or_404(LGU, name__iexact=name)
         return context
 
     def get_success_url(self):
-        return '/' + self.args[0] + '/'
+        return reverse_lazy('seal-view', kwargs={'pk': self.kwargs['pk']})
 
     def form_valid(self, form):
-        name = self.args[0].replace('-', ' ')
+        name = self.kwargs['pk'].replace('-', ' ')
         form.instance.seal = get_object_or_404(LGU, name__iexact=name)
         return super(CreateSealProperty, self).form_valid(form)

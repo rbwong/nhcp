@@ -1,11 +1,9 @@
 from django import forms
-from django.contrib.auth.models import User
 from seals.models import Region, Province, LGU, SealInfo, SealProperty
-from django.utils import timezone
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
-from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
+from crispy_forms.layout import Layout, Field
+
 
 class CategoryCreationForm(forms.ModelForm):
     helper = FormHelper()
@@ -22,6 +20,7 @@ class CategoryCreationForm(forms.ModelForm):
     class Meta:
         model = Region
         fields = ('name',)
+
 
 class EditSVGForm(forms.ModelForm):
     helper = FormHelper()
@@ -60,12 +59,15 @@ class SealCreationForm(forms.ModelForm):
     name = forms.CharField(required=True)
     name_fil = forms.CharField(required=False, label='Name in Filipino')
     description = forms.CharField(widget=forms.Textarea, required=False)
-    description_fil = forms.CharField(widget=forms.Textarea, label='Description in Filipino', required=False)
-    province = forms.ModelChoiceField(Province.objects.all(), label='Official Seal of(Subcategory)')
+    description_fil = forms.CharField(
+        widget=forms.Textarea, label='Description in Filipino', required=False)
+    province = forms.ModelChoiceField(
+        Province.objects.all(), label='Official Seal of(Subcategory)')
 
     class Meta:
         model = LGU
-        fields = ('image', 'name', 'name_fil', 'description', 'description_fil', 'province', 'location')
+        fields = ('image', 'name', 'name_fil', 'description',
+                  'description_fil', 'province', 'location')
 
 
 class SealInfoForm(forms.ModelForm):
@@ -84,7 +86,8 @@ class SealInfoForm(forms.ModelForm):
     name = forms.CharField(required=True)
     name_fil = forms.CharField(required=False, label='Name in Filipino')
     description = forms.CharField(widget=forms.Textarea, required=False)
-    description_fil = forms.CharField(widget=forms.Textarea, label='Description in Filipino', required=False)
+    description_fil = forms.CharField(
+        widget=forms.Textarea, label='Description in Filipino', required=False)
 
     class Meta:
         model = SealInfo
@@ -107,7 +110,8 @@ class SealPropertyForm(forms.ModelForm):
     name = forms.CharField(required=True)
     name_fil = forms.CharField(required=False, label='Name in Filipino')
     description = forms.CharField(widget=forms.Textarea, required=False)
-    description_fil = forms.CharField(widget=forms.Textarea, label='Description in Filipino', required=False)
+    description_fil = forms.CharField(
+        widget=forms.Textarea, label='Description in Filipino', required=False)
     svg = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
